@@ -82,8 +82,9 @@
         url: `/Kelola_Anggota/${id}/edit`,
         type: 'GET',
         success: function (data) {
+            console.log(data);
             const form = document.getElementById('editForm');
-            form.action = `/Kelola_Anggota/${data.id}`;
+            form.action = `/Kelola_Anggota/${data.id}/update`;
             form.querySelector('input[name="_method"]').value = 'PUT';
 
             document.getElementById('edit_id').value = data.id;
@@ -93,15 +94,18 @@
             document.getElementById('edit_tgl_lahir_saksi').value = data.tgl_lahir_saksi;
             document.getElementById('edit_alamat_saksi').value = data.alamat_saksi;
             document.getElementById('edit_no_telepon_saksi').value = data.no_telepon_saksi;
-            document.getElementById('edit_nip').value = data.nip;
+            document.getElementById('edit_nip').value = data.NIP;
 
+            const img = document.getElementById('preview-image');
+            img.src = '';
             if (data.foto) {
-                document.getElementById('preview-image').src = `/storage/${data.foto}`;
+                img.src = `/storage/${data.foto}`;
             } else {
-                document.getElementById('preview-image').src = 'https://via.placeholder.com/100';
+                img.src = 'https://placehold.co/600x400';
             }
 
-            $('#EditTimLapangan').modal('show');
+
+            $('#EditAnggota').modal('show');
         },
         error: function () {
             alert('Gagal mengambil data.');
@@ -110,6 +114,35 @@
 }
 
 </script>
+
+<script>
+    function previewFoto(input) {
+        const preview = document.getElementById('preview-image');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = 'https://via.placeholder.com/100';
+        }
+    }
+     function previewFotoEdit(input) {
+        const preview = document.getElementById('preview-image-edit');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = 'https://placehold.co/100x100';
+        }
+    }
+</script>
+
 
 <script>
     $(document).ready(function () {

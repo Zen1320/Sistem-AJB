@@ -6,13 +6,13 @@ use App\Models\berkas_ajb;
 use App\Models\jenis_pengajuan;
 use App\Models\objek_tanah;
 use App\Models\pembeli;
-use App\Models\pengajuan_ajb; // Perhatikan penulisan model
+use App\Models\pengajuan_ajb;
 use App\Models\penjual;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str; // Untuk str_slug
+use Illuminate\Support\Str;
 use ZipArchive;
 
 class Daftar_AJBController extends Controller
@@ -38,11 +38,11 @@ class Daftar_AJBController extends Controller
             'berkas'
         ])->findOrFail($id);
 
-        // Panggil prepareDownloadFiles dengan benar
+
         $filesToDownload = $this->prepareDownloadFiles($pengajuan->berkas);
         return view('pengguna.daftar_pengajuan.detail', [
             'pengajuan' => $pengajuan,
-            'filesToDownload' => $filesToDownload // Kirim data ke view
+            'filesToDownload' => $filesToDownload
         ]);
     }
 

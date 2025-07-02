@@ -41,6 +41,11 @@ class Kelola_AnggotaController extends Controller
         return redirect()->back()->with('success', 'Anggota saksi berhasil ditambahkan.');
     }
 
+    public function edit($id){
+        $saksi = saksi::find($id)->first();
+        return response()->json($saksi);
+    }
+
     public function update(Request $request, $id)
     {
         $anggota = saksi::findOrFail($id);
@@ -52,7 +57,7 @@ class Kelola_AnggotaController extends Controller
             'tempat_lahir_saksi' => 'required|string|max:100',
             'alamat_saksi' => 'required|string',
             'no_telepon_saksi' => 'required|string|max:20',
-            'nip' => 'required|string|max:50',
+            'NIP' => 'required|string|max:50',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

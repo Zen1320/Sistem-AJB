@@ -1,5 +1,5 @@
 <div class="modal fade" id="EditAnggota" tabindex="-1" aria-labelledby="EditTimLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="EditTimLabel">Form Edit Anggota Saksi</h1>
@@ -53,16 +53,18 @@
 
                             <div class="mb-3">
                                 <label for="edit_nip" class="form-label">NIP</label>
-                                <input type="text" name="nip" id="edit_nip" class="form-control" required>
+                                <input type="text" name="NIP" id="edit_nip" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="edit_foto" class="form-label">Foto</label>
-                                <input type="file" name="foto" id="edit_foto" class="form-control" accept="image/*" onchange="previewFoto(this)">
+                                <input type="file" name="foto" id="edit_foto" class="form-control" accept="image/*" onchange="previewFotoEdit(this)">
+                                <span class="text-muted">* Kosongkan Bila Tidak Ingin Dirubah</span>
                                 <div class="mt-2">
-                                    <img id="preview-image" src="https://via.placeholder.com/100" alt="Preview Foto" class="img-thumbnail" width="100">
+                                    <img id="preview-image-edit" src="https://placehold.co/100x100" class="img-thumbnail" width="100">
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
