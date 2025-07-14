@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('tempat_lahir_pembeli');
             $table->string('alamat_pembeli');
             $table->string('no_telepon_pembeli')->nullable();
+            $table->string('pekerjaan')->nullable();
             $table->timestamps();
         });
     }

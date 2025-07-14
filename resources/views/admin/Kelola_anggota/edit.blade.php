@@ -53,7 +53,7 @@
 
                             <div class="mb-3">
                                 <label for="edit_nip" class="form-label">NIP</label>
-                                <input type="text" name="NIP" id="edit_nip" class="form-control" required>
+                                <input type="text" name="nip" id="edit_nip" class="form-control" required>
                             </div>
 
                             <div class="mb-3">

@@ -13,7 +13,7 @@
                             <i class="fas fa-file-contract me-2"></i>Detail Transaksi AJB
                         </h3>
                         <div>
-                            <a href="{{ url()->previous() }}" class="btn btn-light btn-sm">
+                            <a href="{{ route('Manajemen_PengajuanAJB.index') }}" class="btn btn-light btn-sm">
                                 <i class="fas fa-arrow-left me-1"></i> Kembali
                             </a>
                         </div>
@@ -50,6 +50,24 @@
                                 <p class="mb-0">Rp {{ number_format($pengajuan->harga_transaksi_tanah, 0, ',', '.') }}</p>
                             </div>
                         </div>
+                         <div class="col-md-4">
+                            <div class="card card-body border-0 shadow-sm mb-3">
+                                <h6 class="text-muted mb-3"><i class="fas fa-user me-2"></i>Nama Pemohon </h6>
+                                <p class="mb-0">{{ $pengajuan->user->name }}</p>
+                                <p class="mb-0">+62{{ $pengajuan->user->no_telp }}</p>
+                            </div>
+                        </div>
+                        @if($pengajuan->status == 4 || $pengajuan->status == 5 )
+                        <div class="col-md-4">
+                            <div class="card card-body border-0 shadow-sm mb-3">
+                                <h6 class="text-muted mb-3"><i class="fas fa-user me-2"></i>Menu Aksi</h6>
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prosesModal">Proses</a>
+                                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#revisiModal">Revisi</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -117,7 +135,7 @@
                                         </tr>
                                         <tr>
                                             <th class="text-muted">No. Telepon</th>
-                                            <td>{{ $pengajuan->penjual->no_telepon_penjual ?? '-' }}</td>
+                                            <td>{{ $pengajuan->penjual->no_telepon_penjual ? '62'. ltrim($pengajuan->penjual->no_telepon_penjual) : '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th class="text-muted">Pekerjaan</th>
@@ -145,11 +163,11 @@
                                             </tr>
                                             <tr>
                                                 <th class="text-muted">Nomor Istri Penjual</th>
-                                                <td>{{ $pengajuan->penjual->no_telepon_istri_penjual ?? '-'}}</td>
+                                                <td>{{ '62'.$pengajuan->penjual->no_telepon_istri_penjual ?? '-'}}</td>
                                             </tr>
                                                <tr>
                                                 <th class="text-muted">Pekerjaan</th>
-                                                <td>{{ $pengajuan->penjual->pekerjaan_penjual_istri ?? '-'}}</td>
+                                                <td>{{ $pengajuan->penjual->pekerjaan_penjual_istri ? '62'.ltrim($pengajuan->penjual->pekerjaan_penjual_istri) : '-'}}</td>
                                             </tr>
                                             <tr>
                                                 <th class="text-muted">Tempat/Tgl Lahir</th>
@@ -196,7 +214,10 @@
                                         </tr>
                                         <tr>
                                             <th class="text-muted">No. Telepon</th>
-                                            <td>{{ $pengajuan->pembeli->no_telepon_pembeli ?? '-' }}</td>
+                                            <td>
+                                                {{ $pengajuan->pembeli->no_telepon_pembeli ? '62' . ltrim($pengajuan->pembeli->no_telepon_pembeli, '0') : '-' }}
+                                            </td>
+
                                         </tr>
                                          <tr>
                                             <th class="text-muted">Pekerjaan </th>
@@ -399,107 +420,14 @@
             </div>
         </div>
     </div>
-</div>
+@include('admin.Manajemen_Notaris.partials.revisi')
+@include('admin.Manajemen_Notaris.partials.proses')
 
+</div>
 @endsection
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> --}}
-{{-- <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const downloadAllBtn = document.getElementById('downloadAllBtn');
-
-    if (!downloadAllBtn) return;
-
-    downloadAllBtn.addEventListener('click', async function () {
-        if (typeof JSZip === 'undefined' || typeof saveAs === 'undefined') {
-            alert('Library kompresi tidak tersedia. Silakan refresh halaman.');
-            return;
-        }
-
-        const loadingAlert = Swal.fire({
-            title: 'Menyiapkan dokumen',
-            html: 'Sedang mengumpulkan semua file...',
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading()
-        });
-
-        try {
-            const files = @json($filesToDownload);
-            console.log('Files to download:', files);
-
-            if (!files || files.length === 0) {
-                throw new Error('Tidak ada dokumen tersedia');
-            }
-
-            const zip = new JSZip();
-            const folder = zip.folder('documents');
-            let processedFiles = 0;
-
-            const updateProgress = () => {
-                loadingAlert.update({
-                    html: `Memproses dokumen (${processedFiles}/${files.length})`
-                });
-            };
-
-            await Promise.all(files.map(async file => {
-                try {
-                    const response = await fetch(file.url, {
-                    method: 'GET',
-                    cache: 'no-cache',
-                    credentials: 'same-origin' // penting kalau file butuh auth session
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Gagal mengambil: ${file.name}, status: ${response.status}`);
-                }
-
-                const blob = await response.blob();
-                console.log(`${file.name} size: ${blob.size} bytes`);
-                folder.file(file.name, blob, { binary: true });
-                    processedFiles++;
-                    updateProgress();
-                } catch (error) {
-                    console.error(`Error pada file ${file.name}:`, error);
-                    processedFiles++;
-                    updateProgress();
-                }
-            }));
-
-            const content = await zip.generateAsync({
-                type: "blob",
-                compression: "DEFLATE",
-                compressionOptions: { level: 6 }
-            }, metadata => {
-                console.log(`ZIP progress: ${metadata.percent.toFixed(2)}%`);
-            });
-
-            saveAs(content, `documents.zip`);
-            loadingAlert.close();
-
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: 'Download selesai',
-                showConfirmButton: false,
-                timer: 3000
-            });
-
-        } catch (error) {
-            console.error('ZIP error:', error);
-            loadingAlert.close();
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                text: error.message || 'Terjadi kesalahan saat membuat ZIP'
-            });
-        }
-    });
-});
-</script> --}}
 <script>
     async function downloadAllFiles() {
         const files = @json($filesToDownload);

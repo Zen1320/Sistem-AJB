@@ -25,9 +25,13 @@ Route::get('/tentang', function () {
 // });
 
 
+
+
 Route::middleware(['auth','verify'])->group(function(){
     Route::middleware(['checkrole:0,1,2','cekstatus'])->group(function(){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/Daftar_AJB/{id}/download/{file}', [Daftar_AJBController::class, 'downloadBerkas'])->name('pengajuan.download');
+        Route::get('/Daftar_AJB/{id}/download-zip', [Daftar_AJBController::class, 'downloadZip'])->name('pengajuan.zip');
     });
     //Super Admin
     Route::middleware(['checkrole:0'])->group(function(){
@@ -58,11 +62,15 @@ Route::middleware(['auth','verify'])->group(function(){
         // Route::get('/Kelola_Laporan', [Kelola_LaporanController::class, 'index'])->name('Kelola_JenisTransaksi.index');
         // Route::put('/Kelola_Laporan/{id}/update', [Kelola_LaporanController::class, 'change_status'])->name('Kelola_JenisTransaksi,update');
 
-        // Route::get('/Manajemen_PengajuanAJB', [Manajemen_PengajuanController::class, 'index'])->name('Kelola_JenisTransaksi.index');
-        // Route::post('/Manajemen_PengajuanAJB', [Manajemen_PengajuanController::class, 'store'])->name('Kelola_JenisTransaksi.store');
-        // Route::put('/Manajemen_PengajuanAJB/{id}/update', [Manajemen_PengajuanController::class, 'update'])->name('Kelola_JenisTransaksi,update');
-        // Route::get('/Manajemen_PengajuanAJB/{id}/edit', [Manajemen_PengajuanController::class, 'edit'])->name('Kelola_JenisTransaksi.edit');
-        // Route::delete('/Manajemen_PengajuanAJB/{id}/delete', [Manajemen_PengajuanController::class, 'destroy'])->name('Kelola_JenisTransaksi.Destroy');
+        Route::get('/Manajemen_PengajuanAJB', [Manajemen_PengajuanController::class, 'index'])->name('Manajemen_PengajuanAJB.index');
+        Route::post('/Manajemen_PengajuanAJB', [Manajemen_PengajuanController::class, 'store'])->name('Manajemen_PengajuanAJB.store');
+        Route::put('/Manajemen_PengajuanAJB/{id}/update', [Manajemen_PengajuanController::class, 'update'])->name('Manajemen_PengajuanAJB,update');
+        Route::get('/Manajemen_PengajuanAJB/{id}/cek', [Manajemen_PengajuanController::class, 'detail'])->name('Manajemen_PengajuanAJB.detail');
+        Route::post('/Manajemen_PengajuanAJB/{id}/proses', [Manajemen_PengajuanController::class, 'proses'])->name('Manajemen_PengajuanAJB.proses');
+        Route::get('/Manajemen_PengajuanAJB/{id}/cetak', [Manajemen_PengajuanController::class, 'cetakakta'])->name('Manajemen_PengajuanAJB.cetak-akta');
+        Route::post('/Manajemen_PengajuanAJB/{id}/revisi', [Manajemen_PengajuanController::class, 'revisi'])->name('Manajemen_PengajuanAJB.revisi');
+        Route::post('/Manajemen_PengajuanAJB/{id}/upload-akta', [Manajemen_PengajuanController::class, 'uploadakta'])->name('Manajemen_PengajuanAJB.akta_selesai');
+        Route::delete('/Manajemen_PengajuanAJB/{id}/delete', [Manajemen_PengajuanController::class, 'destroy'])->name('Manajemen_PengajuanAJB.Destroy');
     });
     //Masyarakat
     Route::middleware(['checkrole:2','cekstatus'])->group(function(){
@@ -71,10 +79,11 @@ Route::middleware(['auth','verify'])->group(function(){
         Route::get('/Daftar_AJB', [Daftar_AJBController::class, 'index'])->name('pengguna.daftar.index');
         Route::get('/Daftar_AJB/{id}/Detail', [Daftar_AJBController::class, 'detail'])->name('pengguna.daftar.detail');
         Route::get('/Daftar_AJB/{id}/edit', [Daftar_AJBController::class, 'edit'])->name('pengguna.daftar.edit');
+        Route::get('/Daftar_AJB/{id}/unduh', [Daftar_AJBController::class, 'unduhakta'])->name('pengguna.daftar.unduhakta');
         Route::put('/Daftar_AJB/{id}/update', [Daftar_AJBController::class, 'update'])->name('pengguna.AJB.update');
         Route::delete('/Daftar_AJB/{id}/destroy', [Daftar_AJBController::class, 'destroy'])->name('pengguna.AJB.destroy');
-        Route::get('/Daftar_AJB/{id}/download/{file}', [Daftar_AJBController::class, 'downloadBerkas'])->name('pengajuan.download');
-        Route::get('/Daftar_AJB/{id}/download-zip', [Daftar_AJBController::class, 'downloadZip'])->name('pengajuan.zip');
+
+
     });
 });
 

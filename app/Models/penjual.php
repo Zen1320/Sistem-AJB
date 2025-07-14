@@ -13,10 +13,15 @@ class penjual extends Model
         'nik_penjual',
         'tgl_lahir_penjual',
         'tempat_lahir_penjual',
+        'pekerjaan_penjual',
+        
+
         'nama_istri_penjual',
         'nik_istri_penjual',
         'tgl_lahir_istri_penjual',
         'tempat_lahir_istri_penjual',
+        'pekerjaan_penjual_istri',
+
         'alamat_penjual',
         'no_telepon_penjual', // 'no_telp_penjual'
         'no_telepon_istri_penjual' // 'no_telp_istri_penjual'

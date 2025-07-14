@@ -14,6 +14,9 @@ class objek_tanah extends Model
         'nomor_nib',
         'pengesahan_nib_oleh',
         'nomor_spp',
+        'luas_tanah',
+        'luas_bangunan',
+
         'provinsi',
         'kota',
         'kecamatan',

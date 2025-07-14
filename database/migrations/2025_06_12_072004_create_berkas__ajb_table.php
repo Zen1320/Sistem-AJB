@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('file_ktp_pembeli')->nullable();
             $table->string('file_kk_pembeli')->nullable();
             $table->string('file_akta_nikah')->nullable();
+
             $table->string('file_sertifikat')->nullable();
             $table->string('file_bukti_pbb')->nullable();
             $table->string('file_imb')->nullable();
             $table->string('file_persetujuan')->nullable();
             $table->string('file_dokumen_lainnya')->nullable();
+            $table->string('file_akta')->nullable();
             $table->timestamps();
         });
     }

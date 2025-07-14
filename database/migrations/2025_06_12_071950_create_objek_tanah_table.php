@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('nomor_nib');
             $table->string('pengesahan_nib_oleh');
             $table->string('nomor_spp');
+            $table->string('luas_tanah');
+            $table->string('luas_bangunan');
+            
             $table->string('provinsi');
             $table->string('kota');
             $table->string('kecamatan');

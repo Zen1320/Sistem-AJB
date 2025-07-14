@@ -14,7 +14,9 @@ class pembeli extends Model
         'tgl_lahir_pembeli',
         'tempat_lahir_pembeli',
         'alamat_pembeli',
-        'no_telepon_pembeli', // 'no_telp_pembeli'
+        'no_telepon_pembeli',
+        'pekerjaan'
+        // 'no_telp_pembeli'
         // 'no_telp'
     ];
 

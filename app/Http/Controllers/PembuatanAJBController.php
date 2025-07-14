@@ -35,23 +35,32 @@ class PembuatanAJBController extends Controller
             'penjual_alamat' => 'required|string',
             'penjual_tempat_lahir' => 'required|string',
             'penjual_tgl_lahir' => 'required|date',
+            'pekerjaan_penjual' => 'required|string|max:255',
+            'no_telepon_penjual'=> 'nullable|numeric',
+            'no_telepon_istri_penjual' => 'nullable|numeric',
             //istri penjual
             'istri_nama' => 'nullable|string|max:255',
             'istri_nik' => 'nullable|numeric|digits_between:10,20',
             'istri_tempat_lahir' => 'nullable|string',
             'istri_tgl_lahir' => 'nullable|date',
+            'pekerjaan_penjual_istri' => 'nullable|string|max:255',
             // Step 2: Pembeli
             'pembeli_nama' => 'required|string|max:255',
             'pembeli_nik' => 'required|numeric|digits_between:10,20',
             'pembeli_alamat' => 'required|string',
             'pembeli_tempat_lahir' => 'required|string',
             'pembeli_tgl_lahir' => 'required|date',
+            'pekerjaan' => 'required|string|max:255',
+            'no_telepon_pembeli' => 'nullable|numeric',
             // Step 3: Objek
             'nomor_hak_bangun' => 'required|string|max:255',
             'nomor_surat_ukur' => 'required|string|max:255',
             'nomor_nib' => 'required|string|max:255',
             'pengesah_nib_oleh' => 'required|string|max:255',
             'nomor_spp' => 'required|string|max:255',
+            'luas_tanah' => 'required|string|max:255',
+            'luas_bangunan' => 'required|string|max:255',
+
             'provinsi' => 'required|string',
             'kota' => 'required|string',
             'kecamatan' => 'required|string',
@@ -140,7 +149,11 @@ class PembuatanAJBController extends Controller
                 'nik_istri_penjual' => $request->istri_nik ?? null,
                 'tgl_lahir_istri_penjual' => $request->istri_tgl_lahir ?? null,
                 'tempat_lahir_istri_penjual' => $request->istri_tempat_lahir ?? null,
+                'pekerjaan_penjual' => $request->pekerjaan_penjual,
+                'pekerjaan_penjual_istri' => $request->penjual_alamat,
                 'alamat_penjual' => $request->penjual_alamat,
+                'no_telepon_penjual' => $request->no_telepon_penjual,
+                'no_telepon_istri_penjual' => $request->no_telepon_istri_penjual
             ]);
 
             // Create Pembeli (perbaikan field yang tertukar)
@@ -150,6 +163,8 @@ class PembuatanAJBController extends Controller
                 'tgl_lahir_pembeli' => $request->pembeli_tgl_lahir,
                 'tempat_lahir_pembeli' => $request->pembeli_tempat_lahir,
                 'alamat_pembeli' => $request->pembeli_alamat,
+                'pekerjaan' => $request->pekerjaan,
+                'no_telepon_pembeli' => $request->no_telepon_pembeli
             ]);
 
             // Create Objek Tanah
@@ -159,6 +174,9 @@ class PembuatanAJBController extends Controller
                 'nomor_nib' => $request->nomor_nib,
                 'pengesahan_nib_oleh' => $request->pengesah_nib_oleh,
                 'nomor_spp' => $request->nomor_spp,
+                'luas_tanah' => $request->luas_tanah,
+                'luas_bangunan' => $request->luas_bangunan,
+
                 'provinsi' => $request->provinsi,
                 'kota' => $request->kota,
                 'kecamatan' => $request->kecamatan,
@@ -197,12 +215,12 @@ class PembuatanAJBController extends Controller
                 'kode_pengajuan' => $kodePengajuan,
                 'harga_transaksi_tanah' => $request->harga_transaksi,
                 'tanggal_pengajuan' => now(),
-                'status' => 0, // Status awal: menunggu
+                'status' => 0,
             ]);
 
             DB::commit();
 
-            return redirect()->route('pengguna.pembuatanajb.index')
+            return redirect()->route('pengguna.daftar.index')
                 ->with('success', 'Pengajuan AJB berhasil dibuat dengan kode: ' . $kodePengajuan);
             } catch (\Exception $e) {
                 Log::error('Terjadi error saat registrasi', [

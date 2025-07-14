@@ -8,6 +8,7 @@ use App\Models\objek_tanah;
 use App\Models\pembeli;
 use App\Models\pengajuan_ajb;
 use App\Models\penjual;
+use App\Models\saksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -42,7 +43,8 @@ class Daftar_AJBController extends Controller
         $filesToDownload = $this->prepareDownloadFiles($pengajuan->berkas);
         return view('pengguna.daftar_pengajuan.detail', [
             'pengajuan' => $pengajuan,
-            'filesToDownload' => $filesToDownload
+            'filesToDownload' => $filesToDownload,
+
         ]);
     }
 
@@ -181,23 +183,32 @@ class Daftar_AJBController extends Controller
             'penjual_alamat' => 'required|string',
             'penjual_tempat_lahir' => 'required|string',
             'penjual_tgl_lahir' => 'required|date',
+            'pekerjaan_penjual' => 'required|string|max:255',
+            'no_telepon_penjual' => 'nullable|numeric',
             //istri penjual
             'istri_nama' => 'nullable|string|max:255',
             'istri_nik' => 'nullable|numeric|digits_between:10,20',
             'istri_tempat_lahir' => 'nullable|string',
             'istri_tgl_lahir' => 'nullable|date',
+            'pekerjaan_penjual_istri' => 'nullable|string|max:255',
+             'no_telepon_istri_penjual' => 'nullable|numeric',
             // Step 2: Pembeli
             'pembeli_nama' => 'required|string|max:255',
             'pembeli_nik' => 'required|numeric|digits_between:10,20',
             'pembeli_alamat' => 'required|string',
             'pembeli_tempat_lahir' => 'required|string',
             'pembeli_tgl_lahir' => 'required|date',
+            'no_telepon_pembeli' => 'nullable|numeric',
+
             // Step 3: Objek
             'nomor_hak_bangun' => 'required|string|max:255',
             'nomor_surat_ukur' => 'required|string|max:255',
             'nomor_nib' => 'required|string|max:255',
             'pengesah_nib_oleh' => 'required|string|max:255',
             'nomor_spp' => 'required|string|max:255',
+            'luas_tanah' => 'required|string|max:255',
+            'luas_bangunan' => 'required|string|max:255',
+
             'provinsi' => 'required|string',
             'kota' => 'required|string',
             'kecamatan' => 'required|string',
@@ -296,6 +307,10 @@ class Daftar_AJBController extends Controller
                 'tgl_lahir_istri_penjual' => $request->istri_tgl_lahir ?? null,
                 'tempat_lahir_istri_penjual' => $request->istri_tempat_lahir ?? null,
                 'alamat_penjual' => $request->penjual_alamat,
+                'pekerjaan_penjual' => $request->pekerjaan_penjual,
+                'pekerjaan_penjual_istri' => $request->penjual_alamat,
+                'no_telepon_penjual' => $request->no_telepon_penjual,
+                'no_telepon_istri_penjual' => $request->no_telepon_istri_penjual
             ]);
 
             $pembeli->update([
@@ -304,11 +319,16 @@ class Daftar_AJBController extends Controller
                 'tgl_lahir_pembeli' => $request->pembeli_tgl_lahir,
                 'tempat_lahir_pembeli' => $request->pembeli_tempat_lahir,
                 'alamat_pembeli' => $request->pembeli_alamat,
+                'pekerjaan' => $request->pekerjaan,
+                'no_telepon_pembeli' => $request->no_telepon_pembeli
             ]);
 
             $objekTanah->update([
                 'nomor_hak_bangun' => $request->nomor_hak_bangun,
                 'nomor_surat_ukur' => $request->nomor_surat_ukur,
+                'luas_tanah' => $request->luas_tanah,
+                'luas_bangunan' => $request->luas_bangunan,
+
                 'nomor_nib' => $request->nomor_nib,
                 'pengesahan_nib_oleh' => $request->pengesah_nib_oleh,
                 'nomor_spp' => $request->nomor_spp,

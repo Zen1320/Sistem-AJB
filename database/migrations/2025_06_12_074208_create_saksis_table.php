@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('alamat_saksi');
             $table->char('no_telepon_saksi',20);
             $table->string('foto')->nullable();
-            $table->string('NIP');
+            $table->string('nip');
             $table->timestamps();
         });
     }

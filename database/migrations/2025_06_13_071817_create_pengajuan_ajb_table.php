@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('status')->default(0);
             $table->string('keterangan')->nullable();
             $table->string('file_Akta')->nullable();
+            $table->timestamp('tanggal_akad')->nullable();
             $table->timestamps();
         });
     }

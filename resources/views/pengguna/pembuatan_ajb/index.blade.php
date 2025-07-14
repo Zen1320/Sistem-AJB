@@ -60,6 +60,15 @@
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir" name="penjual_tempat_lahir" icon="map-marker-alt" required />
                         </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_penjual" required>
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan_penjual" icon="briefcase" required />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +96,15 @@
                         </div>
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir Istri" name="istri_tempat_lahir" icon="map-marker-alt" />
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_istri_penjual" >
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan_penjual_istri" icon="briefcase" />
                         </div>
                     </div>
                 </div>
@@ -127,6 +145,15 @@
                         </div>
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir" name="pembeli_tempat_lahir" icon="map-marker-alt" required />
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_pembeli" required>
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan" icon="briefcase" />
                         </div>
                     </div>
                 </div>
@@ -183,6 +210,12 @@
                         </div>
                         <div class="col-md-4">
                             <x-form.input label="Nomor Surat Ukur" name="nomor_surat_ukur" icon="ruler-combined" required />
+                        </div>
+                        <div class="col-md-4">
+                            <x-form.input label="Luas Tanah (m²) (meter persegi)" name="luas_tanah" icon="map" required />
+                        </div>
+                        <div class="col-md-4">
+                            <x-form.input label="Luas Bangunan (m²) (meter persegi)" name="luas_bangunan" icon="building" required />
                         </div>
                         <div class="col-md-4">
                             <x-form.input label="Nomor NIB" name="nomor_nib" icon="file-alt" required />

@@ -43,8 +43,11 @@
                                                     <td class="text-center">
                                                         <div class="btn-group">
                                                                 <a href="{{route('pengguna.daftar.detail',$item->id)}}" class="btn btn-info btn-sm">Lihat</a>
-                                                            @if($item->status == '0' || $item->status == '1')
+                                                            @if($item->status == '0' )
                                                                 <a href="{{route('pengguna.daftar.edit',$item->id)}}" class="btn btn-warning btn-sm">Edit Data</a>
+                                                            @endif
+                                                            @if($item->status == '1' )
+                                                                <a href="{{route('pengguna.daftar.edit',$item->id)}}" class="btn btn-danger btn-sm">Revisi Data</a>
                                                             @endif
                                                             @if($item->status == '0')
                                                                 @method('DELETE')

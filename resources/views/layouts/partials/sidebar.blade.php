@@ -36,7 +36,7 @@
                 {{-- Untuk Staff & Superadmin (Role 0 dan 1) --}}
                 @if(Auth::user()->role == 0 || Auth::user()->role == 1)
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ request()->is('Manajemen_PengajuanAJB*') ? 'active' : '' }}">
+                        <a href="{{route('Manajemen_PengajuanAJB.index')}}" class="nav-link {{ request()->is('Manajemen_PengajuanAJB*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tasks"></i>
                             <p>Manajemen Pengajuan</p>
                         </a>

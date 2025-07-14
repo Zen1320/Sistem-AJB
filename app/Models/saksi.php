@@ -15,7 +15,7 @@ class saksi extends Model
         'tempat_lahir_saksi',
         'alamat_saksi',
         'no_telepon_saksi',
-        'NIP',
+        'nip',
         'foto'
     ];
 

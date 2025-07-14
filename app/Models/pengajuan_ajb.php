@@ -12,7 +12,7 @@ class pengajuan_ajb extends Model
     protected $fillable =[
     'id_user', 'id_penjual', 'id_pembeli', 'id_saksi',
     'id_jenis', 'id_objek_tanah', 'id_berkas','kode_pengajuan',
-    'harga_transaksi_tanah', 'tanggal_pengajuan', 'status', 'keterangan','file_Akta'
+    'harga_transaksi_tanah', 'tanggal_pengajuan', 'status', 'keterangan','file_Akta','tanggal_akad'
     ];
 
     public function user() {

@@ -7,7 +7,7 @@
         <div class="card-body">
  <!-- Header dengan progress indicator -->
     <div class="text-center mb-5">
-        <h2 class="fw-bold text-primary">Edit Formulir Pengajuan Akta Jual Beli</h2>
+        <h2 class="fw-bold text-primary">@if($ajb->status == 1) Revisi @else Edit @endif Formulir Pengajuan Akta Jual Beli</h2>
         <p class="text-muted">Lengkapi formulir berikut untuk mengajukan pembuatan Akta Jual Beli (AJB)</p>
 
         <!-- Progress Steps -->
@@ -58,6 +58,15 @@
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir" name="penjual_tempat_lahir" value="{{ old('penjual_tempat_lahir',$ajb->penjual->tempat_lahir_penjual) }}" icon="map-marker-alt" required />
                         </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_penjual" value="{{ old('no_telepon_penjual',$ajb->penjual->no_telepon_penjual) }}">
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan_penjual" value="{{ old('pekerjaan_penjual',$ajb->penjual->pekerjaan_penjual) }}" icon="briefcase" required />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,6 +94,15 @@
                         </div>
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir Istri" name="istri_tempat_lahir" value="{{ old('istri_tempat_lahir',$ajb->penjual->tempat_lahir_istri_penjual) }}" icon="map-marker-alt" />
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_istri_penjual" value="{{ old('no_telepon_istri_penjual',$ajb->penjual->no_telepon_istri_penjual) }}" >
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                         <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan_penjual_istri" value="{{ old('pekerjaan_penjual_istri',$ajb->penjual->pekerjaan_penjual_istri) }}" icon="briefcase" required />
                         </div>
                     </div>
                 </div>
@@ -129,6 +147,15 @@
                         </div>
                         <div class="col-md-6">
                             <x-form.input label="Tempat Lahir" name="pembeli_tempat_lahir" icon="map-marker-alt" value="{{ old('pembeli_tempat_lahir',$ajb->pembeli->tempat_lahir_pembeli) }}" required />
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="No Telp" name="no_telepon_pembeli" value="{{ old('no_telepon_pembeli',$ajb->penjual->no_telepon_pembeli) }}" >
+                                <x-slot name="prepend">+62</x-slot>
+                            </x-form.input>
+                            <span class="text-muted">*Nomor yang dimasukan sudah terhubung dengan whatsapp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <x-form.input label="Pekerjaan" name="pekerjaan" value="{{ old('pekerjaan',$ajb->pembeli->pekerjaan) }}" icon="briefcase" required />
                         </div>
                     </div>
                 </div>
@@ -185,6 +212,12 @@
                         </div>
                         <div class="col-md-4">
                             <x-form.input label="Nomor Surat Ukur" name="nomor_surat_ukur" icon="ruler-combined" value="{{ old('nomor_surat_ukur',$ajb->objekTanah->nomor_surat_ukur) }}" required />
+                        </div>
+                        <div class="col-md-4">
+                            <x-form.input label="Luas Tanah" name="luas_tanah" icon="map" value="{{ old('luas_tanah',$ajb->objekTanah->luas_tanah) }}" required />
+                        </div>
+                        <div class="col-md-4">
+                            <x-form.input label="Luas Bangunan" name="luas_bangunan" icon="building" value="{{ old('luas_bangunan',$ajb->objekTanah->luas_bangunan) }}" required />
                         </div>
                         <div class="col-md-4">
                             <x-form.input label="Nomor NIB" name="nomor_nib" icon="file-alt" value="{{ old('nomor_nib',$ajb->objekTanah->nomor_nib) }}" required />

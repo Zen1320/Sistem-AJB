@@ -13,7 +13,11 @@
     </label>
 
     <div class="input-group">
-        @if($icon)
+        @isset($prepend)
+            <span class="input-group-text">{{ $prepend }}</span>
+        @endisset
+        
+        @if($icon && !isset($prepend))
             <span class="input-group-text">
                 <i class="fas fa-{{ $icon }}"></i>
             </span>

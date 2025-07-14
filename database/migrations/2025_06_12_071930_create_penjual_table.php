@@ -18,11 +18,15 @@ return new class extends Migration
             $table->date('tgl_lahir_penjual');
             $table->string('tempat_lahir_penjual');
             $table->string('no_telepon_penjual')->nullable();
+            $table->string('pekerjaan_penjual')->nullable();
+
             $table->string('nama_istri_penjual')->nullable();
             $table->char('nik_istri_penjual', 16)->nullable();
             $table->date('tgl_lahir_istri_penjual')->nullable();
             $table->string('tempat_lahir_istri_penjual')->nullable();
             $table->string('no_telepon_istri_penjual')->nullable();
+            $table->string('pekerjaan_penjual_istri')->nullable();
+            
             $table->string('alamat_penjual');
             $table->timestamps();
         });

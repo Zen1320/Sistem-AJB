@@ -25,7 +25,7 @@ class Kelola_AnggotaController extends Controller
             'tempat_lahir_saksi' => 'required|string|max:100',
             'alamat_saksi' => 'required|string',
             'no_telepon_saksi' => 'required|string|max:20',
-            'NIP' => 'required|string|max:50',
+            'nip' => 'required|string|max:50',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -57,7 +57,7 @@ class Kelola_AnggotaController extends Controller
             'tempat_lahir_saksi' => 'required|string|max:100',
             'alamat_saksi' => 'required|string',
             'no_telepon_saksi' => 'required|string|max:20',
-            'NIP' => 'required|string|max:50',
+            'nip' => 'required|string|max:50',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

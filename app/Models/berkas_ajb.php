@@ -14,11 +14,13 @@ class berkas_ajb extends Model
         'file_ktp_pembeli',
         'file_kk_pembeli',
         'file_akta_nikah',
+        
         'file_sertifikat',
         'file_bukti_pbb',
         'file_imb',
         'file_persetujuan',
         'file_dokumen_lainnya',
+        'file_akta'
     ];
 
     public function pengajuanAjb() {

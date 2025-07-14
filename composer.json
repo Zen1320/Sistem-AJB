@@ -11,6 +11,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "phpoffice/phpword": "^1.4",
         "realrashid/sweet-alert": "^7.3"
     },
     "require-dev": {
@@ -30,7 +31,9 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/StatusHelper.php"
+            "app/Helpers/StatusHelper.php",
+            "app/Helpers/MessageHelper.php",
+            "app/Helpers/FormatHelper.php"
         ]
     },
     "autoload-dev": {

@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'staff@mail.com',
             'role' => 1,
             'password' => Hash::make('staff123'),
-
         ]);
 
         User::create([
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@mail.com',
             'role' => 0,
             'password' => Hash::make('admin123'),
-
         ]);
 
 
@@ -39,7 +37,6 @@ class DatabaseSeeder extends Seeder
             ['nama_jenis' => 'Jual Tanah Pribadi'],
             ['nama_jenis' => 'Pelepasan Aset'],
             ['nama_jenis' => 'Pembelian Tanah Baru'],
-            ['nama_jenis' => 'Renovasi Gedung'],
         ];
 
         DB::table('jenis_transaksis')->insert($data);

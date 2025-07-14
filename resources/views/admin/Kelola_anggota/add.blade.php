@@ -50,7 +50,7 @@
 
                             <div class="mb-3">
                                 <label for="nip" class="form-label">NIP</label>
-                                <input type="text" name="NIP" class="form-control" placeholder="Masukkan NIP" required>
+                                <input type="text" name="nip" class="form-control" placeholder="Masukkan NIP" required>
                             </div>
 
                             <div class="mb-3">
