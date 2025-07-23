@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ request()->is('Kelola_Laporan*') ? 'active' : '' }}">
+                        <a href="{{route('Kelola_JenisTransaksi.index')}}" class="nav-link {{ request()->is('Kelola_Laporan*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-alt"></i>
                             <p>Laporan Pengajuan</p>
                         </a>

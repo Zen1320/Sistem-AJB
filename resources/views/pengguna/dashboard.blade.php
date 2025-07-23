@@ -24,7 +24,7 @@
                     </div>
                     <div>
                         <p class="text-muted mb-1">Total AJB Diajukan</p>
-                        <h3 class="text-primary fw-bold mb-0">24</h3>
+                        <h3 class="text-primary fw-bold mb-0">{{$totalAjb}}</h3>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div>
                         <p class="text-muted mb-1">AJB Selesai</p>
-                        <h3 class="text-success fw-bold mb-0">18</h3>
+                        <h3 class="text-success fw-bold mb-0">{{$selesai}}</h3>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <p class="text-muted mb-1">Dalam Proses</p>
-                        <h3 class="text-warning fw-bold mb-0">6</h3>
+                        <h3 class="text-warning fw-bold mb-0">{{$dalamProses}}</h3>
                     </div>
                 </div>
             </div>
@@ -72,46 +72,18 @@
                         <th>Jenis Transaksi</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Status</th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>AJB-2023-01128</td>
-                        <td>Jual Beli Rumah</td>
-                        <td>15 Nov 2023</td>
-                        <td><span class="badge bg-success">Selesai</span></td>
-
-                    </tr>
-                    <tr>
-                        <td>AJB-2023-01127</td>
-                        <td>Jual Beli Tanah</td>
-                        <td>14 Nov 2023</td>
-
-                        <td><span class="badge bg-warning text-dark">Proses Notaris</span></td>
-
-                    </tr>
-                    <tr>
-                        <td>AJB-2023-01126</td>
-                        <td>Jual Beli Ruko</td>
-                        <td>13 Nov 2023</td>
-
-                        <td><span class="badge bg-danger">Perlu Revisi</span></td>
-
-                    </tr>
-                    <tr>
-                        <td>AJB-2023-01125</td>
-                        <td>Jual Beli Apartemen</td>
-                        <td>12 Nov 2023</td>
-
-                        <td><span class="badge bg-primary">Menunggu Verifikasi</span></td>
-
-                    </tr>
+                    @foreach ($recentAjb as $ajb => $item)
+                    <td>{{ $item->kode_pengajuan }}</td>
+                    <td>{{$item->jenis->nama_jenis}}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y') }}</td>
+                    <td>{!!status_badge($item->status)!!}</td>
+                    @endforeach
                 </tbody>
             </table>
-            <div class="mt-2">
-                <a href="#" class="btn btn-sm btn-outline-primary">Lihat Semua <i class="fas fa-arrow-right ms-1"></i></a>
-            </div>
+
 
         </div>
     </div>
@@ -125,35 +97,26 @@
                     <h5 class="fw-bold mb-0"><i class="fas fa-tasks me-2"></i>Proses AJB Berjalan</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Proses Item -->
-                    @php
-                        $proses = [
-                            ['id' => '01127', 'jenis' => 'Jual Beli Tanah', 'status' => 'Proses Notaris', 'color' => 'warning', 'progress' => 65, 'update' => '2 hari lalu'],
-                            ['id' => '01125', 'jenis' => 'Jual Beli Apartemen', 'status' => 'Menunggu Verifikasi', 'color' => 'primary', 'progress' => 30, 'update' => '5 hari lalu'],
-                            ['id' => '01126', 'jenis' => 'Jual Beli Ruko', 'status' => 'Perlu Revisi', 'color' => 'danger', 'progress' => 45, 'update' => 'Dokumen tanah kurang'],
-                        ];
-                    @endphp
+                    @foreach ($prosesAjb as $item)
+                        <div class="mb-4">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0 p-3 bg-{{ $item['color'] }} bg-opacity-10 rounded-circle me-3">
+                                    <i class="fas fa-file-alt fs-4 text-{{ $item['color'] }}"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">AJB-2023-{{ $item['id'] }}</h6>
+                                    <p class="text-muted mb-1">{{ $item['jenis'] }} - {{ $item['status'] }}</p>
 
-                    @foreach ($proses as $item)
-                    <div class="mb-4">
-                        <div class="d-flex align-items-start">
-                            <div class="flex-shrink-0 p-3 bg-{{ $item['color'] }} bg-opacity-10 rounded-circle me-3">
-                                <i class="fas fa-file-alt fs-4 text-{{ $item['color'] }}"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">AJB-2023-{{ $item['id'] }}</h6>
-                                <p class="text-muted mb-1">{{ $item['jenis'] }} - {{ $item['status'] }}</p>
-
-                                <small class="text-muted">
-                                    {{ is_numeric($item['update']) ? 'Diperbarui: '.$item['update'] : 'Pesan: '.$item['update'] }}
-                                </small>
+                                    <small class="text-muted">
+                                        Diperbarui: {{ $item['update'] }}
+                                    </small>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
                 <div class="card-footer text-center bg-white">
-                    <a href="#" class="btn btn-outline-primary btn-sm">Lihat Semua Proses</a>
+                    <a href="{{route('pengguna.daftar.index')}}" class="btn btn-outline-primary btn-sm">Lihat Semua Proses</a>
                 </div>
             </div>
         </div>
@@ -164,33 +127,6 @@
                 <div class="card-header">
                     <h5 class="fw-bold mb-0"><i class="fas fa-lightbulb me-2"></i>Panduan Cepat</h5>
                 </div>
-                {{-- <div class="card-body">
-                    <div class="list-group list-group-flush">
-                        @php
-                            $panduan = [
-                                ['icon' => 'plus-circle', 'title' => 'Cara Mengajukan AJB Baru', 'desc' => 'Panduan langkah demi langkah', 'color' => 'primary'],
-                                ['icon' => 'file-download', 'title' => 'Download Dokumen Contoh', 'desc' => 'Template dokumen yang diperlukan', 'color' => 'success'],
-                                ['icon' => 'question-circle', 'title' => 'Pertanyaan Umum (FAQ)', 'desc' => 'Temukan jawaban atas pertanyaan Anda', 'color' => 'warning'],
-                                ['icon' => 'headset', 'title' => 'Hubungi Dukungan', 'desc' => 'Butuh bantuan lebih lanjut?', 'color' => 'info'],
-                            ];
-                        @endphp
-
-                        @foreach ($panduan as $item)
-                        <a href="#" class="list-group-item list-group-item-action border-0 py-3">
-                            <div class="d-flex align-items-center">
-                                <div class="p-2 bg-{{ $item['color'] }} bg-opacity-10 rounded me-3">
-                                    <i class="fas fa-{{ $item['icon'] }} text-{{ $item['color'] }}"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-0">{{ $item['title'] }}</h6>
-                                    <small class="text-muted">{{ $item['desc'] }}</small>
-                                </div>
-                                <i class="fas fa-chevron-right text-muted"></i>
-                            </div>
-                        </a>
-                        @endforeach
-                    </div>
-                </div> --}}
                 <div class="card-body">
                     <div class="list-group list-group-flush">
                         <a href="#" class="list-group-item list-group-item-action border-0 py-3 rounded d-flex align-items-center mb-1 shadow-sm hover-shadow transition" data-bs-toggle="modal" data-bs-target="#modalAjukanAJB">
@@ -204,7 +140,7 @@
                             <i class="fas fa-chevron-right text-muted ms-2"></i>
                         </a>
 
-                        <a href="#" class="list-group-item list-group-item-action border-0 py-3 rounded d-flex align-items-center mb-1 shadow-sm hover-shadow transition" data-bs-toggle="modal" data-bs-target="#modalDownloadDokumen">
+                        {{-- <a href="#" class="list-group-item list-group-item-action border-0 py-3 rounded d-flex align-items-center mb-1 shadow-sm hover-shadow transition" data-bs-toggle="modal" data-bs-target="#modalDownloadDokumen">
                             <div class="p-3 bg-success bg-opacity-10 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
                                 <i class="fas fa-file-download text-success fa-lg"></i>
                             </div>
@@ -213,7 +149,7 @@
                                 <small class="text-muted">Template dokumen yang diperlukan</small>
                             </div>
                             <i class="fas fa-chevron-right text-muted ms-2"></i>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -258,7 +194,7 @@
           </li>
           <li class="list-group-item">
             <strong>AJB Diproses</strong><br>
-            Setelah verifikasi, proses pembuatan AJB dimulai dan bisa dilacak melalui dashboard.
+            Setelah verifikasi, proses pembuatan AJB dimulai.
           </li>
         </ol>
       </div>

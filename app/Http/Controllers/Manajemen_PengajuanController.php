@@ -282,9 +282,7 @@ class Manajemen_PengajuanController extends Controller
         return redirect()->back()->with('success', 'Berhasil Dikirim');
     }
 
-    public function cetakakta(){
 
-    }
 
     public function uploadakta(Request $request, $id){
         $request->validate([
@@ -340,19 +338,108 @@ class Manajemen_PengajuanController extends Controller
     }
 
 
-    public function cetaklaporan($id){
-        $pengajuan = pengajuan_ajb::with('user','penjual','pembeli','saksi','objekTanah')->find($id);
-        $templatePath = storage_path('app/templates/template.docx');
-        $template = new TemplateProcessor($templatePath);
-        Carbon::setLocale('id');
-        $hari;
-        $tanggal_teks;
-        $bulan;
-        $tahun;
-        $template->setValue('kode_pengajuan', $pengajuan->kode_pengajuan);
-        $template->setValue('tanggal_sekarang', Carbon::parse(now()->translatedFormat('l, d F Y')));
-        $template->setValue('nama_penjual', $pengajuan->penjual->nama ?? '-');
+    public function cetakakta($id)
+    {
+        $pengajuan = pengajuan_ajb::with([
+            'user',
+            'penjual',
+            'pembeli',
+            'saksi',
+            'jenis',
+            'objekTanah',
+        ])->findOrFail($id);
 
-        $template->setValue('status', $pengajuan->status_text ?? 'Diproses');
+        Carbon::setLocale('id');
+        $now = Carbon::now();
+
+        // Set data
+        $penjual = $pengajuan->penjual;
+        $pembeli = $pengajuan->pembeli;
+        $saksi = $pengajuan->saksi;
+        $tanah = $pengajuan->objekTanah;
+
+        if(!$pengajuan->penjual->nama_istri_penjual || !$pengajuan->penjual->nik_istri_penjual ){
+            $templatePath = storage_path('app/templates/template_non_istri.docx');
+            $templateProcessor = new TemplateProcessor($templatePath);
+        }else{
+            $templatePath = storage_path('app/templates/template_with_istri.docx');
+            $templateProcessor = new TemplateProcessor($templatePath);
+        }
+         $templateProcessor->setValues([
+                'kode_pengajuan' => $pengajuan->kode_pengajuan,
+                'hari' => $now->translatedFormat('l'),
+                'tanggal' => $now->format('d'),
+                'tanggal_teks' => terbilang((int) $now->format('d')),
+                'bulan' => $now->translatedFormat('F'),
+                'tahun' => $now->translatedFormat('Y'),
+                'tahun_teks' => ucwords(terbilang((int) $now->format('Y'))),
+                'tanggal_sekarang' => $now->translatedFormat('d F Y'),
+
+                // Penjual
+                'nama_penjual' => $penjual->nama_penjual,
+                'tempat_lahir_penjual' => $penjual->tempat_lahir_penjual,
+                'tanggal_lahir_penjual' => Carbon::parse($penjual->tanggal_lahir)->translatedFormat('d F Y'),
+                'tanggal_lahir_penjual_teks' => formatTanggalLahirFormal($penjual->tanggal_lahir),
+                'pekerjaan_penjual' => $penjual->pekerjaan_penjual,
+                'alamat_penjual' => $penjual->alamat_penjual,
+                'nik_penjual' => $penjual->nik_penjual,
+                // Istri Penjual
+                'nama_istri_penjual' => $penjual->nama_istri_penjual ?? '',
+                'tempat_lahir_istri_penjual' => $penjual->tempat_lahir_istri_penjual ?? '',
+                'tanggal_lahir_istri_penjual' => Carbon::parse($penjual->tgl_lahir_istri_penjual)->translatedFormat('d F Y'),
+                'tanggal_lahir_penjual_istri_teks' => formatTanggalLahirFormal($penjual->tgl_lahir_istri_penjual),
+                'pekerjaan_istri_penjual' => $penjual->pekerjaan_penjual_istri ?? '',
+                'alamat_istri_penjual' => $penjual->alamat_penjual ?? '',
+                'nik_istri_penjual' => $penjual->nik_istri_penjual,
+                // Pembeli
+                'nama_pembeli' => $pembeli->nama_pembeli,
+                'tempat_lahir_pembeli' => $pembeli->tempat_lahir_pembeli,
+                'tanggal_lahir_pembeli' => Carbon::parse($pembeli->tgl_lahir_pembeli)->translatedFormat('d F Y'),
+                'tanggal_lahir_pembeli_teks' => formatTanggalLahirFormal($pembeli->tgl_lahir_pembeli),
+                'pekerjaan_pembeli' => $pembeli->pekerjaan,
+                'alamat_pembeli' => $pembeli->alamat_pembeli,
+                'nik_pembeli' => $pembeli->nik_pembeli,
+
+                // Tanah
+                'nomor_tanah' => $tanah->nomor_hak_bangun,
+                'tangga_surat_ukur' => $tanah->tanggal_surat_ukur,
+                'nomor_surat_ukur' => $tanah->nomor_surat_ukur,
+                'luas_tanah' => $tanah->luas_tanah,
+                'luas_tanah_teks' => terbilang((int) $tanah->luas_tanah),
+                'luas_bangunan' => $tanah->luas_bangunan,
+                'nomor_nib' => $tanah->nomor_nib,
+                'provinsi' => $tanah->provinsi,
+                'kabupaten' => $tanah->kota,
+                'kecamatan' => $tanah->kecamatan,
+                'desa' => $tanah->kelurahan,
+                'jalan' => $tanah->jalan,
+                'luas' => $tanah->luas,
+                'nilai_nominal' => number_format($pengajuan->harga_transaksi_tanah, 0, ',', '.'),
+                'nilai_nominal_teks' => terbilang($pengajuan->harga_transaksi_tanah),
+
+                // Saksi
+                'nama_notaris' => $saksi->nama_saksi,
+                'tempat_lahir_saksi' => $saksi->tempat_lahir_saksi,
+                'tanggal_lahir_notaris' => Carbon::parse($saksi->tgl_lahir_saksi)->translatedFormat('d F Y'),
+                'tanggal_lahir_saksi_teks' => formatTanggalLahirFormal(Carbon::parse($saksi->tgl_lahir_saksi)->translatedFormat('d F Y')),
+                'pekerjaan_saksi' => "Notaris",
+                'alamat_notaris' => $saksi->alamat,
+                'nik_notaris' => $saksi->nik_saksi,
+                'nip_notaris' => $saksi->nip,
+            ]);
+
+        //test
+        // $templatePath = storage_path('app/templates/template.docx');
+        // $templateProcessor = new TemplateProcessor($templatePath);
+        // $templateProcessor->setValues([
+        //     'nama_kamu' => 'Ferry'
+        // ]);
+
+        // Simpan
+        $fileName = 'Akta Kode' . $pengajuan->kode_pengajuan .'-'. $now->translatedFormat('d F Y').'.docx';
+        $savePath = storage_path("app/public/$fileName");
+        $templateProcessor->saveAs($savePath);
+
+        return response()->download($savePath)->deleteFileAfterSend(true);
     }
 }

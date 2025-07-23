@@ -11,11 +11,13 @@ class objek_tanah extends Model
     protected $fillable = [
         'nomor_hak_bangun',
         'nomor_surat_ukur',
+        'tanggal_surat_ukur',
         'nomor_nib',
         'pengesahan_nib_oleh',
         'nomor_spp',
         'luas_tanah',
         'luas_bangunan',
+
 
         'provinsi',
         'kota',

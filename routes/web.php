@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\laporanexport;
 use App\Http\Controllers\Daftar_AJBController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Kelola_AnggotaController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\KelolaJenisTransaksiController;
 use App\Http\Controllers\Manajemen_PengajuanController;
 use App\Http\Controllers\PembuatanAJBController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -58,8 +60,11 @@ Route::middleware(['auth','verify'])->group(function(){
         Route::put('/Kelola_Anggota/{id}/update', [Kelola_AnggotaController::class, 'update'])->name('Kelola_Anggota,update');
         Route::get('/Kelola_Anggota/{id}/edit', [Kelola_AnggotaController::class, 'edit'])->name('Kelola_Anggota.edit');
         Route::delete('/Kelola_Anggota/{id}/delete', [Kelola_AnggotaController::class, 'destroy'])->name('Kelola_Anggota.Destroy');
+        Route::get('/laporan/export', function (Request $request) {
+            return Excel::download(new laporanexport($request->tgl_awal, $request->tgl_akhir), 'laporan.xlsx');
+        })->name('laporan.export');
 
-        // Route::get('/Kelola_Laporan', [Kelola_LaporanController::class, 'index'])->name('Kelola_JenisTransaksi.index');
+        Route::get('/Kelola_Laporan', [Kelola_LaporanController::class, 'index'])->name('Kelola_JenisTransaksi.index');
         // Route::put('/Kelola_Laporan/{id}/update', [Kelola_LaporanController::class, 'change_status'])->name('Kelola_JenisTransaksi,update');
 
         Route::get('/Manajemen_PengajuanAJB', [Manajemen_PengajuanController::class, 'index'])->name('Manajemen_PengajuanAJB.index');

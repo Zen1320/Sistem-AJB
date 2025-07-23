@@ -11,6 +11,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
         "phpoffice/phpword": "^1.4",
         "realrashid/sweet-alert": "^7.3"
     },
@@ -33,7 +34,7 @@
         "files": [
             "app/Helpers/StatusHelper.php",
             "app/Helpers/MessageHelper.php",
-            "app/Helpers/FormatHelper.php"
+            "app/Helpers/TanggalHelper.php"
         ]
     },
     "autoload-dev": {

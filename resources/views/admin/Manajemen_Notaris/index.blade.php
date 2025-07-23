@@ -52,7 +52,7 @@
                                                         @endif
                                                     @endif
                                                     @if($item->status == '2')
-                                                       <a href="{{route('Manajemen_PengajuanAJB.detail', $item->id)}}" class="btn btn-sm btn-warning">Cetak Surat Akta</a>
+                                                         <a href="{{route('Manajemen_PengajuanAJB.cetak-akta', $item->id)}}" class="btn btn-sm btn-warning">Cetak Surat Akta</a>
                                                         <button onclick="bukaModalUploadAkta({{ $item->id }})" class="btn btn-sm btn-success">
                                                             Upload Akta
                                                         </button>

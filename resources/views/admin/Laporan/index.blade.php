@@ -1,18 +1,57 @@
 @extends('layouts.app')
+@section('title','Laporan')
 @section('content')
 <div class="container">
     <div class="page-inner">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-            <h3 class="fw-bold mb-3">Kelola Jenis Transaksi</h3>
+            <h3 class="fw-bold">Laporan </h3>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-round">
                     <div class="card-header">
-                        <h4>Daftar Jenis Transaksi </h4>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTimLapangan">
-                            Tambah Jenis Transaksi
-                        </button>
+                        <h4 class="card-title">Filter Laporan Pengajuan</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="GET">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-3">
+                                    <label for="tgl_awal" class="form-label">Tanggal Awal</label>
+                                    <input type="date" name="tgl_awal" id="tgl_awal" class="form-control @error('tgl_awal') is-invalid @enderror"
+                                        value="{{ old('tgl_awal', request('tgl_awal')) }}" placeholder="Tanggal awal" autocomplete="off" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="tgl_akhir" class="form-label">Tanggal Akhir</label>
+                                    <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control @error('tgl_akhir') is-invalid @enderror"
+                                        value="{{ old('tgl_akhir', request('tgl_akhir')) }}" placeholder="Tanggal akhir" autocomplete="off" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-search"></i> Cari
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card card-round">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <h4>Daftar Laporan Transaksi Barang Masuk</h4>
+                        </div>
+                        <div>
+                             <a href="{{ route('laporan.export', [
+                                'tgl_awal'  => request('tgl_awal'),
+                                'tgl_akhir' => request('tgl_akhir'),
+                            ]) }}" class="btn btn-success mb-3">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -20,30 +59,38 @@
                                 <div class="table-responsive table-hover table-sales">
                                     <table class="table table-bordered table-striped"id="example">
                                         <thead>
-                                            <tr>
+                                           <tr>
                                                 <th>No</th>
-                                                <th>Nama Jenis Transaksi</th>
-                                                <th class="text-center">Aksi</th>
+                                                <th>Kode Pengajuan</th>
+                                                <th>Tanggal</th>
+                                                <th>Nama Penjual</th>
+                                                <th>Nama Pembeli</th>
+                                                <th>Luas Tanah</th>
+                                                <th>Harga Transaksi</th>
+                                                <th>Alamat Tanah</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($jenis as $key => $item)
+                                        @forelse ($data as $item)
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->nama_jenis }}</td>
-                                                <td class="text-center">
-                                                    <button type="button"
-                                                    class="btn btn-warning btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#EditJenisTransaksi"
-                                                    onclick="editJenisTransaksi({{ $item->id }})">
-                                                    Edit
-                                                    </button>
-                                                    @method('DELETE')
-                                                    <a href="{{route('Kelola_JenisTransaksi.Destroy', $item->id)}}" class="btn btn-sm btn-danger" data-confirm-delete="true">Hapus</a>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->kode_pengajuan }}</td>
+                                                <td>{{\Carbon\Carbon::setLocale('id')}}{{
+                                                \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y') }}</td>
+                                                <td>{{ $item->penjual->nama_penjual ?? '-' }}</td>
+                                                <td>{{ $item->pembeli->nama_pembeli ?? '-' }}</td>
+                                                <td>{{ $item->objekTanah->luas_tanah ?? '-' }} m²</td>
+                                                <td>Rp {{ number_format($item->harga_transaksi_tanah, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $item->objekTanah->jalan ?? '-' }},
+                                                    {{ $item->objekTanah->kelurahan ?? '-' }},
+                                                    {{ $item->objekTanah->kecamatan ?? '-' }},
+                                                    {{ $item->objekTanah->kota ?? '-' }}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+
+                                        @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -55,35 +102,12 @@
         </div>
     </div>
 </div>
-@include('admin.Kelola_JenisTransaksi.add')
-@include('admin.Kelola_JenisTransaksi.edit')
 @endsection
 
 @push('scripts')
-<!-- jQuery & DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    function editJenisTransaksi(id) {
-        $.ajax({
-            url: `/Kelola_JenisTransaksi/${id}/edit`,
-            type: 'GET',
-            success: function (data) {
-                // Set form action
-                const form = document.getElementById('editForm');
-                form.action = `/Kelola_JenisTransaksi/${data.id}/update`;
-                form.method = 'POST';
-                document.getElementById('edit_nama').value = data.nama_jenis;
-
-                $('#EditTimLapangan').modal('show');
-            },
-            error: function () {
-                alert('Gagal mengambil data.');
-            }
-        });
-    }
-</script>
 
 <script>
     $(document).ready(function () {
@@ -107,7 +131,7 @@
 </script>
 @endpush
 @push('styles')
-<!-- DataTables CSS -->
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endpush
 

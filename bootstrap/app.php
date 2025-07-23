@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \RealRashid\SweetAlert\ToSweetAlert::class,
         ]);
         $middleware->alias([
-            // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+            'Excel' => Maatwebsite\Excel\Facades\Excel::class,
             'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
             'checkrole' => App\Http\Middleware\role::class,
             'verify' => App\Http\Middleware\verify::class,
