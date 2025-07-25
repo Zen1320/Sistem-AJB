@@ -404,6 +404,7 @@ class Manajemen_PengajuanController extends Controller
                 'nomor_tanah' => $tanah->nomor_hak_bangun,
                 'tangga_surat_ukur' => $tanah->tanggal_surat_ukur,
                 'nomor_surat_ukur' => $tanah->nomor_surat_ukur,
+                'tanggal_surat_ukur' => formatTanggalLahirFormal($tanah->tanggal_surat_ukur),
                 'luas_tanah' => $tanah->luas_tanah,
                 'luas_tanah_teks' => terbilang((int) $tanah->luas_tanah),
                 'luas_bangunan' => $tanah->luas_bangunan,

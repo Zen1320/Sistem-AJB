@@ -212,6 +212,9 @@
                             <x-form.input label="Nomor Surat Ukur" name="nomor_surat_ukur" icon="ruler-combined" required />
                         </div>
                         <div class="col-md-4">
+                            <x-form.input label="Tanggal Surat Ukur" name="tanggal_surat_ukur" type="date" icon="calendar" required />
+                        </div>
+                        <div class="col-md-4">
                             <x-form.input label="Luas Tanah (m²) (meter persegi)" name="luas_tanah" icon="map" required />
                         </div>
                         <div class="col-md-4">

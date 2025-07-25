@@ -266,6 +266,12 @@
                                                         <td>{{ $pengajuan->objekTanah->nomor_surat_ukur }}</td>
                                                     </tr>
                                                     <tr>
+                                                        <th class="text-muted">Tanggal Surat Ukur</th>
+                                                        <td>
+                                                            {{ $pengajuan->objekTanah->tanggal_surat_ukur ?? '-'}}, {{ \Carbon\Carbon::parse($pengajuan->objekTanah->tanggal_surat_ukur)->translatedFormat('d F Y') }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <th class="text-muted">Luas Tanah</th>
                                                         <td>{{ $pengajuan->objekTanah->luas_tanah }} M<sup>2</sup></td>
                                                     </tr>

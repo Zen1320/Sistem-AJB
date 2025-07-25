@@ -171,6 +171,7 @@ class PembuatanAJBController extends Controller
             $objekTanah = objek_tanah::create([
                 'nomor_hak_bangun' => $request->nomor_hak_bangun,
                 'nomor_surat_ukur' => $request->nomor_surat_ukur,
+                'tanggal_surat_ukur' => $request->tanggal_surat_ukur,
                 'nomor_nib' => $request->nomor_nib,
                 'pengesahan_nib_oleh' => $request->pengesah_nib_oleh,
                 'nomor_spp' => $request->nomor_spp,

@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_hak_bangun');
             $table->string('nomor_surat_ukur');
+            $table->date('tanggal_surat_ukur')->nullable();
             $table->string('nomor_nib');
             $table->string('pengesahan_nib_oleh');
             $table->string('nomor_spp');
             $table->string('luas_tanah');
             $table->string('luas_bangunan');
-            
+
             $table->string('provinsi');
             $table->string('kota');
             $table->string('kecamatan');

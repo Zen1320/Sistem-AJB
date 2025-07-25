@@ -326,6 +326,7 @@ class Daftar_AJBController extends Controller
             $objekTanah->update([
                 'nomor_hak_bangun' => $request->nomor_hak_bangun,
                 'nomor_surat_ukur' => $request->nomor_surat_ukur,
+                'tanggal_surat_ukur' => $request->tanggal_surat_ukur,
                 'luas_tanah' => $request->luas_tanah,
                 'luas_bangunan' => $request->luas_bangunan,
 

@@ -214,6 +214,9 @@
                             <x-form.input label="Nomor Surat Ukur" name="nomor_surat_ukur" icon="ruler-combined" value="{{ old('nomor_surat_ukur',$ajb->objekTanah->nomor_surat_ukur) }}" required />
                         </div>
                         <div class="col-md-4">
+                            <x-form.input label="Tanggal Surat Ukur" name="tanggal_surat_ukur" type="date" value="{{ old('tanggal_surat_ukur',$ajb->objekTanah->tanggal_surat_ukur) }}" icon="calendar" required />
+                        </div>
+                        <div class="col-md-4">
                             <x-form.input label="Luas Tanah" name="luas_tanah" icon="map" value="{{ old('luas_tanah',$ajb->objekTanah->luas_tanah) }}" required />
                         </div>
                         <div class="col-md-4">
