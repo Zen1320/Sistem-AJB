@@ -35,8 +35,7 @@ class DatabaseSeeder extends Seeder
         $data = [
             ['nama_jenis' => 'Jual Tanah PT'],
             ['nama_jenis' => 'Jual Tanah Pribadi'],
-            ['nama_jenis' => 'Pelepasan Aset'],
-            ['nama_jenis' => 'Pembelian Tanah Baru'],
+            ['nama_jenis' => 'Jual Tanah Milik Suami-Istri'],
         ];
 
         DB::table('jenis_transaksis')->insert($data);

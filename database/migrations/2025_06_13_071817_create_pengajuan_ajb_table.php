@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('id_berkas')->constrained('berkas_ajb')->onDelete('cascade');
             $table->foreignId('id_jenis')->constrained('jenis_transaksis')->onDelete('cascade');
             $table->string('kode_pengajuan')->unique();
-            $table->decimal('harga_transaksi_tanah', 15, 2);
+            $table->string('harga_transaksi_tanah');
             $table->date('tanggal_pengajuan');
             $table->integer('status')->default(0);
             $table->string('keterangan')->nullable();
